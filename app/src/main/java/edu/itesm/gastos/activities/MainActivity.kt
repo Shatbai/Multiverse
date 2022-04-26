@@ -33,8 +33,10 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
         val db = Room.databaseBuilder(this@MainActivity, GastosDB::class.java, "gastos").build()
         gastoDao = db.gastoDao()
+
         initRecycler()
         initViewModel()
     }
