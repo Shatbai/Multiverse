@@ -6,6 +6,7 @@ import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import edu.itesm.gastos.R
@@ -14,9 +15,11 @@ import edu.itesm.gastos.database.GastosDB
 import edu.itesm.gastos.databinding.ActivityMainBinding
 import edu.itesm.gastos.entities.Gasto
 import edu.itesm.gastos.mvvm.MainActivityViewModel
+import edu.itesm.gastos.mvvm.MainActivityViewModelFactory
 import edu.itesm.perros.adapter.GastosAdapter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
@@ -48,14 +51,23 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel(){
-        viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
+        val mainActivityViewModelFactory = MainActivityViewModelFactory(gastoDao)
+        viewModel = ViewModelProvider(this,
+            mainActivityViewModelFactory).get(MainActivityViewModel::class.java)
+        lifecycle.coroutineScope.launch {
+            viewModel.getGastosFlujo().collect(){ gastos->
+                adapter.setGastos(gastos)
+                adapter.notifyDataSetChanged()
+            }
+        }
+       /* viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
         viewModel.getLiveDataObserver().observe(this, Observer {
             if(!it.isEmpty()){
                 adapter.setGastos(it)
                 adapter.notifyDataSetChanged()
             }
         })
-        viewModel.getGastos(gastoDao)
+        viewModel.getGastos(gastoDao)*/
     }
 
     private val agregaDatosLauncher =
@@ -78,13 +90,7 @@ class MainActivity : AppCompatActivity() {
                 CoroutineScope(Dispatchers.IO).launch {
                     gastoDao.insertGasto(gasto)
                 }
-                viewModel.getLiveDataObserver().observe(this, Observer {
-                    if(!it.isEmpty()){
-                        adapter.setGastos(it)
-                        adapter.notifyDataSetChanged()
-                    }
-                })
-                viewModel.getGastos(gastoDao)
+
             }).show(supportFragmentManager, "")
         }
 
