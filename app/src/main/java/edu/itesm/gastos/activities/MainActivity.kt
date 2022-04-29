@@ -15,6 +15,9 @@ import edu.itesm.gastos.databinding.ActivityMainBinding
 import edu.itesm.gastos.entities.Gasto
 import edu.itesm.gastos.mvvm.MainActivityViewModel
 import edu.itesm.perros.adapter.GastosAdapter
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -72,6 +75,16 @@ class MainActivity : AppCompatActivity() {
             GastoCapturaDialog(onSubmitClickListener = { gasto->
                 Toast.makeText(baseContext, gasto.description, Toast.LENGTH_LONG).show()
                 //gastoDao.insertGasto(gasto)
+                CoroutineScope(Dispatchers.IO).launch {
+                    gastoDao.insertGasto(gasto)
+                }
+                viewModel.getLiveDataObserver().observe(this, Observer {
+                    if(!it.isEmpty()){
+                        adapter.setGastos(it)
+                        adapter.notifyDataSetChanged()
+                    }
+                })
+                viewModel.getGastos(gastoDao)
             }).show(supportFragmentManager, "")
         }
 
