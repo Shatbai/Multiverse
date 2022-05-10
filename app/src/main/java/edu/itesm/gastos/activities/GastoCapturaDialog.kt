@@ -21,7 +21,7 @@ class GastoCapturaDialog ( private  val onSubmitClickListener: (Gasto) -> Unit):
         binding.agregaGasto.setOnClickListener {
             val concepto  = binding.conceptoGastoCifra.text.toString()
             val monto = binding.montoGastoCifra.text.toString().toDouble()
-            val  gasto  = Gasto(0,concepto, monto)
+            val  gasto  = Gasto("",concepto, monto)
             onSubmitClickListener.invoke(gasto)
             dismiss()
         }
