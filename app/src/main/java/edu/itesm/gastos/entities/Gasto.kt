@@ -11,3 +11,9 @@ data class Gasto(
     val id: Int,
     val description: String, val monto: Double
 ): Serializable
+
+data class GastoFb(
+    val id: String? ="",
+    val description: String?="",
+    val monto: Double?=0.0
+): Serializable

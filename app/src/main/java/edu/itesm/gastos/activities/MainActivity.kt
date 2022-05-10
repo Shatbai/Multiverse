@@ -9,11 +9,17 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import edu.itesm.gastos.R
 import edu.itesm.gastos.dao.GastoDao
 import edu.itesm.gastos.database.GastosDB
 import edu.itesm.gastos.databinding.ActivityMainBinding
 import edu.itesm.gastos.entities.Gasto
+import edu.itesm.gastos.entities.GastoFb
 import edu.itesm.gastos.mvvm.MainActivityViewModel
 import edu.itesm.gastos.mvvm.MainActivityViewModelFactory
 import edu.itesm.perros.adapter.GastosAdapter
@@ -29,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var adapter: GastosAdapter
     private lateinit var viewModel : MainActivityViewModel
+    private val databaseReference = Firebase.database.getReference("gastos")
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,6 +58,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun initViewModel(){
+        databaseReference.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                var lista = mutableListOf<Gasto>()
+                for (gastoObject in snapshot.children){
+                    val objeto = gastoObject.getValue(GastoFb::class.java)
+                    lista.add(Gasto(0, objeto!!.description!!, objeto.monto!!))
+
+                }
+                adapter.setGastos(lista)
+                adapter.notifyDataSetChanged()
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+
+        })
+        /*
         val mainActivityViewModelFactory = MainActivityViewModelFactory(gastoDao)
         viewModel = ViewModelProvider(this,
             mainActivityViewModelFactory).get(MainActivityViewModel::class.java)
@@ -60,6 +85,7 @@ class MainActivity : AppCompatActivity() {
                 adapter.notifyDataSetChanged()
             }
         }
+         */
        /* viewModel = ViewModelProvider(this).get(MainActivityViewModel::class.java)
         viewModel.getLiveDataObserver().observe(this, Observer {
             if(!it.isEmpty()){
@@ -87,10 +113,18 @@ class MainActivity : AppCompatActivity() {
             GastoCapturaDialog(onSubmitClickListener = { gasto->
                 Toast.makeText(baseContext, gasto.description, Toast.LENGTH_LONG).show()
                 //gastoDao.insertGasto(gasto)
-                CoroutineScope(Dispatchers.IO).launch {
+                /*CoroutineScope(Dispatchers.IO).launch {
                     gastoDao.insertGasto(gasto)
                 }
-
+                 */
+                val id = databaseReference.push().key!!
+                val gastoFb = GastoFb(id,gasto.description, gasto.monto)
+                databaseReference.child(id).setValue(gastoFb)
+                    .addOnSuccessListener {
+                    Toast.makeText(baseContext, "Agregado", Toast.LENGTH_LONG).show()
+                }.addOnFailureListener {
+                        Toast.makeText(baseContext, "Error", Toast.LENGTH_LONG).show()
+                }
             }).show(supportFragmentManager, "")
         }
 
