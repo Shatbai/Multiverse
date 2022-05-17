@@ -3,8 +3,10 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/andyv/Desktop/Escuela/Sem feb-jun 22/Des. api Android/gastos_firebase/app/src/main/res/layout/activity_captura_gasto.xml" value="0.25" />
         <entry key="..\:/Users/andyv/Desktop/Escuela/Sem feb-jun 22/Des. api Android/gastos_firebase/app/src/main/res/layout/activity_main.xml" value="0.19010416666666666" />
         <entry key="..\:/Users/andyv/Desktop/Escuela/Sem feb-jun 22/Des. api Android/gastos_firebase/app/src/main/res/layout/activity_splash.xml" value="0.22" />
+        <entry key="..\:/Users/andyv/Desktop/Escuela/Sem feb-jun 22/Des. api Android/gastos_firebase/app/src/main/res/layout/gasto.xml" value="0.20416666666666666" />
         <entry key="app/src/main/res/drawable/ic_appicon.xml" value="0.126" />
         <entry key="app/src/main/res/layout/activity_captura_gasto.xml" value="0.2765625" />
         <entry key="app/src/main/res/layout/activity_main.xml" value="0.1" />

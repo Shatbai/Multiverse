@@ -9,11 +9,14 @@ import java.io.Serializable
 data class Gasto(
     @PrimaryKey(autoGenerate = false)
     val id: String,
-    val description: String, val monto: Double
+    val nombre: String,
+    val universo: Int,
+    val genero: String
 ): Serializable
 
 data class GastoFb(
     val id: String? ="",
-    val description: String?="",
-    val monto: Double?=0.0
+    val nombre: String?="",
+    val universo: Int?=0,
+    val genero: String?=""
 ): Serializable

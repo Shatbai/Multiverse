@@ -90,7 +90,7 @@ class MainActivity : AppCompatActivity() {
                 for (gastoObject in snapshot.children){
                     val objeto = gastoObject.getValue(GastoFb::class.java)
                     lista.add(Gasto(objeto!!.id.toString(),
-                        objeto!!.description!!, objeto.monto!!))
+                        objeto!!.nombre!!, objeto.universo!!,objeto.genero!!))
                 }
                 adapter.setGastos(lista)
                 adapter.notifyDataSetChanged()
@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity() {
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()){ resultado->
             if(resultado.resultCode == RESULT_OK){
                 val gasto : Gasto= resultado.data?.getSerializableExtra("gasto") as Gasto
-                Toast.makeText(baseContext, gasto.description, Toast.LENGTH_LONG ).show()
+                Toast.makeText(baseContext, gasto.nombre, Toast.LENGTH_LONG ).show()
             }
 
     }
@@ -137,14 +137,14 @@ class MainActivity : AppCompatActivity() {
                 agregaDatosLauncher.launch(intento)
                  */
             GastoCapturaDialog(onSubmitClickListener = { gasto->
-                Toast.makeText(baseContext, gasto.description, Toast.LENGTH_LONG).show()
+                Toast.makeText(baseContext, gasto.nombre, Toast.LENGTH_LONG).show()
                 //gastoDao.insertGasto(gasto)
                 /*CoroutineScope(Dispatchers.IO).launch {
                     gastoDao.insertGasto(gasto)
                 }
                  */
                 val id = databaseReference.push().key!!
-                val gastoFb = GastoFb(id,gasto.description, gasto.monto)
+                val gastoFb = GastoFb(id,gasto.nombre, gasto.universo,gasto.genero)
                 databaseReference.child(id).setValue(gastoFb)
                     .addOnSuccessListener {
                     Toast.makeText(baseContext, "Agregado", Toast.LENGTH_LONG).show()

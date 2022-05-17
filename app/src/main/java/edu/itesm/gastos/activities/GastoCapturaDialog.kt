@@ -19,9 +19,10 @@ class GastoCapturaDialog ( private  val onSubmitClickListener: (Gasto) -> Unit):
         val constructor = AlertDialog.Builder(requireActivity())
         constructor.setView(binding.root)
         binding.agregaGasto.setOnClickListener {
-            val concepto  = binding.conceptoGastoCifra.text.toString()
-            val monto = binding.montoGastoCifra.text.toString().toDouble()
-            val  gasto  = Gasto("",concepto, monto)
+            val nombre  = binding.conceptoGastoCifra.text.toString()
+            val universo = binding.montoGastoCifra.text.toString().toInt()
+            val genero=binding.generoCameoCifra.text.toString()
+            val  gasto  = Gasto("",nombre, universo,genero)
             onSubmitClickListener.invoke(gasto)
             dismiss()
         }
