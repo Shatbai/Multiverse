@@ -16,7 +16,7 @@ class CapturaGastoActivity : AppCompatActivity() {
         binding.agregaGasto.setOnClickListener {
             val concepto  = binding.conceptoGastoCifra.text.toString()
             val monto = binding.montoGastoCifra.text.toString().toDouble()
-            val  gasto  = Gasto(0,concepto, monto)
+            val  gasto  = Gasto("",concepto, monto)
             val intento = Intent()
             intento.putExtra("gasto", gasto)
             setResult(RESULT_OK, intento)

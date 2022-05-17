@@ -9,6 +9,10 @@ import edu.itesm.gastos.entities.Gasto
 class GastosAdapter(private var gastos: List<Gasto>) :
     RecyclerView.Adapter<GastoViewHolder>() {
 
+    fun getGasto(position: Int):Gasto{
+        return gastos[position]
+    }
+
     fun setGastos(gastos: List<Gasto>){
         this.gastos = gastos
     }

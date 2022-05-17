@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.tsuryo.swipeablerv.SwipeLeftRightCallback
 import edu.itesm.gastos.R
 import edu.itesm.gastos.dao.GastoDao
 import edu.itesm.gastos.database.GastosDB
@@ -55,6 +56,26 @@ class MainActivity : AppCompatActivity() {
         adapter = GastosAdapter(gastos)
         binding.gastos.layoutManager = LinearLayoutManager(this)
         binding.gastos.adapter = adapter
+        binding.gastos.setListener(object : SwipeLeftRightCallback.Listener{
+            override fun onSwipedLeft(position: Int) {
+                removeGasto(position)
+
+            }
+
+            override fun onSwipedRight(position: Int) {
+                binding.gastos.adapter?.notifyDataSetChanged()
+
+            }
+        })
+    }
+    private fun removeGasto(position:Int){
+        val gasto=adapter.getGasto(position)
+        databaseReference.database.getReference("gastos").child(gasto.id.toString()).removeValue().addOnSuccessListener {
+            Toast.makeText(baseContext,"Borrado de la DB",Toast.LENGTH_LONG).show()
+            adapter.notifyDataSetChanged()
+        }.addOnFailureListener{
+            Toast.makeText(baseContext,"Falla DB",Toast.LENGTH_LONG).show()
+        }
     }
 
     private fun initViewModel(){
@@ -63,7 +84,7 @@ class MainActivity : AppCompatActivity() {
                 var lista = mutableListOf<Gasto>()
                 for (gastoObject in snapshot.children){
                     val objeto = gastoObject.getValue(GastoFb::class.java)
-                    lista.add(Gasto(0, objeto!!.description!!, objeto.monto!!))
+                    lista.add(Gasto(objeto!!.id.toString(), objeto!!.description!!, objeto.monto!!))
 
                 }
                 adapter.setGastos(lista)

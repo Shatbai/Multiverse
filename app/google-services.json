@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "417067853782",
+    "firebase_url": "https://gastosfirebase-12d9e-default-rtdb.firebaseio.com",
+    "project_id": "gastosfirebase-12d9e",
+    "storage_bucket": "gastosfirebase-12d9e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:417067853782:android:db27bc2ca90e8cbb2ce677",
+        "android_client_info": {
+          "package_name": "edu.itesm.gastos"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "417067853782-700ijb8lpndj7cqassv2l2hblhrba4g3.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCrLwsWbLW5haefaMfPZ_8WYCWmrmbf5GQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "417067853782-700ijb8lpndj7cqassv2l2hblhrba4g3.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

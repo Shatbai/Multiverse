@@ -7,8 +7,8 @@ import java.io.Serializable
 
 @Entity
 data class Gasto(
-    @PrimaryKey(autoGenerate = true)
-    val id: Int,
+    @PrimaryKey(autoGenerate =false)
+    val id: String,
     val description: String, val monto: Double
 ): Serializable
 
