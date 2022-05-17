@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="300dp"
-    android:layout_height="300dp"
-    app:cardCornerRadius="16dp"
+    android:layout_height="500dp"
+    android:layout_margin="20dp"
     android:background="@color/black"
-    android:layout_margin="20dp">
+    app:cardCornerRadius="16dp">
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="366dp"
-        android:layout_height="210dp">
+        android:layout_height="309dp">
 
         <TextView
             android:id="@+id/concepto"
@@ -36,7 +36,7 @@
             app:layout_constraintHorizontal_bias="0.173"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/concepto"
-            app:layout_constraintVertical_bias="0.271" />
+            app:layout_constraintVertical_bias="0.111" />
 
         <TextView
             android:id="@+id/genero"
@@ -46,9 +46,20 @@
             android:textSize="20sp"
             app:layout_constraintBottom_toTopOf="@+id/monto"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.131"
+            app:layout_constraintHorizontal_bias="0.149"
             app:layout_constraintStart_toEndOf="@+id/concepto"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.714" />
+            app:layout_constraintVertical_bias="0.628" />
+
+        <ImageView
+            android:id="@+id/foto"
+            android:layout_width="286dp"
+            android:layout_height="130dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/monto"
+            app:srcCompat="@drawable/circle" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
+
 </androidx.cardview.widget.CardView>

@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "725feab154713c2fb70b7cb4e518725d",
+    "identityHash": "039b867730caf33b12bdbc3c167cc7e5",
     "entities": [
       {
         "tableName": "Gasto",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `description` TEXT NOT NULL, `monto` REAL NOT NULL, PRIMARY KEY(`id`))",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` TEXT NOT NULL, `nombre` TEXT NOT NULL, `universo` INTEGER NOT NULL, `genero` TEXT NOT NULL, PRIMARY KEY(`id`))",
         "fields": [
           {
             "fieldPath": "id",
@@ -15,15 +15,21 @@
             "notNull": true
           },
           {
-            "fieldPath": "description",
-            "columnName": "description",
+            "fieldPath": "nombre",
+            "columnName": "nombre",
             "affinity": "TEXT",
             "notNull": true
           },
           {
-            "fieldPath": "monto",
-            "columnName": "monto",
-            "affinity": "REAL",
+            "fieldPath": "universo",
+            "columnName": "universo",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "genero",
+            "columnName": "genero",
+            "affinity": "TEXT",
             "notNull": true
           }
         ],
@@ -40,7 +46,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '725feab154713c2fb70b7cb4e518725d')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '039b867730caf33b12bdbc3c167cc7e5')"
     ]
   }
 }

@@ -2,6 +2,7 @@ package edu.itesm.gastos.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
@@ -30,7 +31,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.launch
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),android.widget.SearchView.OnQueryTextListener {
 
     private lateinit var gastoDao: GastoDao
     private lateinit var  gastos: List<Gasto>
@@ -38,6 +39,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var adapter: GastosAdapter
     private lateinit var viewModel : MainActivityViewModel
     private val databaseReference = Firebase.database.getReference("gastos")
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -85,6 +87,7 @@ class MainActivity : AppCompatActivity() {
     }
     private fun initViewModel(){
         databaseReference.addValueEventListener(object : ValueEventListener{
+            // metodo hace la consulta validar
             override fun onDataChange(snapshot: DataSnapshot) {
                 var lista = mutableListOf<Gasto>()
                 for (gastoObject in snapshot.children){
@@ -155,6 +158,52 @@ class MainActivity : AppCompatActivity() {
         }
 
     }
+    private fun hideKeyboard() {
+        val imm = getSystemService(INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(binding.root.windowToken, 0)
+    }
+     override fun onQueryTextSubmit(searchString: String?): Boolean {
+        if(!searchString.isNullOrEmpty()){
+            // buscarPerrosPorRaza(searchString.lowercase())
+            consultaPerros(searchString)
+        }
+        return true
+    }
+    fun consultaPerros(searchString: String?){
+        if(!searchString.isNullOrEmpty()){
+
+
+            databaseReference.addValueEventListener(object : ValueEventListener{
+                // metodo hace la consulta validar
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var lista = mutableListOf<Gasto>()
+                    for (gastoObject in snapshot.children){
+                        val objeto = gastoObject.getValue(GastoFb::class.java)
+                        if(searchString.toInt() == objeto!!.universo!!){
+
+                            lista.add(Gasto(objeto!!.id.toString(),
+                                objeto!!.nombre!!, objeto.universo!!,objeto.genero!!))
+
+                        }
+
+                    }
+                    adapter.setGastos(lista)
+                    adapter.notifyDataSetChanged()
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    TODO("Not yet implemented")
+                }
+
+            })
+            hideKeyboard()
+        }
+
+    }
+     override fun onQueryTextChange(p0: String?): Boolean {
+        return true
+    }
+
 
 
 

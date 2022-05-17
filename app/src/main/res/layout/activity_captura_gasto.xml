@@ -114,6 +114,7 @@
                 android:layout_gravity="center"
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginVertical="16dp"
+                android:layout_marginTop="36dp"
                 android:gravity="center"
                 android:paddingVertical="16dp"
                 android:text="Agregar"
@@ -123,7 +124,24 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/monto_gasto" />
+                app:layout_constraintTop_toBottomOf="@+id/agrega_foto" />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/agrega_foto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginVertical="16dp"
+                android:gravity="center"
+                android:paddingVertical="16dp"
+                android:text="Agregar la foto "
+                android:textColor="@android:color/white"
+                android:visibility="visible"
+                app:cornerRadius="16dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/genero_cameo" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </com.google.android.material.card.MaterialCardView>

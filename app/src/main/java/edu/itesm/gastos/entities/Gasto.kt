@@ -1,5 +1,6 @@
 package edu.itesm.gastos.entities
 
+import android.graphics.Bitmap
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
@@ -11,12 +12,14 @@ data class Gasto(
     val id: String,
     val nombre: String,
     val universo: Int,
-    val genero: String
+    val genero: String,
+    //val foto: Bitmap
 ): Serializable
 
 data class GastoFb(
     val id: String? ="",
     val nombre: String?="",
     val universo: Int?=0,
-    val genero: String?=""
+    val genero: String?="",
+    //val foto: Bitmap
 ): Serializable
