@@ -2,6 +2,7 @@ package edu.itesm.gastos.activities
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.Window
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -43,6 +44,8 @@ class MainActivity : AppCompatActivity(),android.widget.SearchView.OnQueryTextLi
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        requestWindowFeature(Window.FEATURE_NO_TITLE)
+        supportActionBar!!.hide()
         setContentView(R.layout.activity_main)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
@@ -169,6 +172,7 @@ class MainActivity : AppCompatActivity(),android.widget.SearchView.OnQueryTextLi
         }
         return true
     }
+
     fun consultaPerros(searchString: String?){
         if(!searchString.isNullOrEmpty()){
 
@@ -183,22 +187,17 @@ class MainActivity : AppCompatActivity(),android.widget.SearchView.OnQueryTextLi
 
                             lista.add(Gasto(objeto!!.id.toString(),
                                 objeto!!.nombre!!, objeto.universo!!,objeto.genero!!))
-
                         }
-
                     }
                     adapter.setGastos(lista)
                     adapter.notifyDataSetChanged()
                 }
-
                 override fun onCancelled(error: DatabaseError) {
                     TODO("Not yet implemented")
                 }
-
             })
             hideKeyboard()
         }
-
     }
      override fun onQueryTextChange(p0: String?): Boolean {
         return true
