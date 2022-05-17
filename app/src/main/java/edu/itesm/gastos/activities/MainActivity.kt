@@ -7,6 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.coroutineScope
+import androidx.recyclerview.widget.ItemTouchHelper
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.room.Room
 import com.google.firebase.database.DataSnapshot
@@ -51,11 +52,13 @@ class MainActivity : AppCompatActivity() {
         initViewModel()
         fabAgregaDatos()
     }
+
     private fun initRecycler(){
         gastos = mutableListOf<Gasto>()
         adapter = GastosAdapter(gastos)
         binding.gastos.layoutManager = LinearLayoutManager(this)
         binding.gastos.adapter = adapter
+
         binding.gastos.setListener(object : SwipeLeftRightCallback.Listener{
             override fun onSwipedLeft(position: Int) {
                 removeGasto(position)
@@ -76,16 +79,14 @@ class MainActivity : AppCompatActivity() {
         }.addOnFailureListener{
             Toast.makeText(baseContext,"Falla DB",Toast.LENGTH_LONG).show()
         }
-    }
-
     private fun initViewModel(){
         databaseReference.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 var lista = mutableListOf<Gasto>()
                 for (gastoObject in snapshot.children){
                     val objeto = gastoObject.getValue(GastoFb::class.java)
-                    lista.add(Gasto(objeto!!.id.toString(), objeto!!.description!!, objeto.monto!!))
-
+                    lista.add(Gasto(objeto!!.id.toString(),
+                        objeto!!.description!!, objeto.monto!!))
                 }
                 adapter.setGastos(lista)
                 adapter.notifyDataSetChanged()
