@@ -35,10 +35,10 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/genero_cameo"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="373dp"
-                android:layout_height="72dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:hint="Genero:"
                 app:boxCornerRadiusBottomEnd="16dp"
                 app:boxCornerRadiusBottomStart="16dp"
@@ -52,7 +52,7 @@
                     android:id="@+id/genero_cameo_cifra"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal"
+                    android:inputType="textPersonName"
                     android:padding="16dp"
                     android:textSize="18sp" />
             </com.google.android.material.textfield.TextInputLayout>
