@@ -59,26 +59,30 @@ class MainActivity : AppCompatActivity() {
         binding.gastos.layoutManager = LinearLayoutManager(this)
         binding.gastos.adapter = adapter
 
-        binding.gastos.setListener(object : SwipeLeftRightCallback.Listener{
+        binding.gastos.setListener(object :
+            SwipeLeftRightCallback.Listener{
             override fun onSwipedLeft(position: Int) {
                 removeGasto(position)
-
             }
-
             override fun onSwipedRight(position: Int) {
                 binding.gastos.adapter?.notifyDataSetChanged()
-
             }
         })
     }
-    private fun removeGasto(position:Int){
-        val gasto=adapter.getGasto(position)
-        databaseReference.database.getReference("gastos").child(gasto.id.toString()).removeValue().addOnSuccessListener {
-            Toast.makeText(baseContext,"Borrado de la DB",Toast.LENGTH_LONG).show()
-            adapter.notifyDataSetChanged()
-        }.addOnFailureListener{
-            Toast.makeText(baseContext,"Falla DB",Toast.LENGTH_LONG).show()
-        }
+
+    private fun removeGasto(position: Int){
+        val gasto = adapter.getGasto(position)
+        databaseReference.database.getReference("gastos")
+            .child(gasto.id.toString()).removeValue().addOnSuccessListener {
+                Toast.makeText(baseContext,
+                    "Borrado de la BD", Toast.LENGTH_LONG).show()
+                adapter.notifyDataSetChanged()
+            }.addOnFailureListener {
+                Toast.makeText(baseContext,
+                    "Falla PPPOOOOOOMMMM BD", Toast.LENGTH_LONG).show()
+            }
+
+    }
     private fun initViewModel(){
         databaseReference.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
