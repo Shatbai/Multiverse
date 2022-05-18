@@ -73,6 +73,7 @@ class MainActivity : AppCompatActivity(),android.widget.SearchView.OnQueryTextLi
                 binding.gastos.adapter?.notifyDataSetChanged()
             }
         })
+        binding.busqueda.setOnQueryTextListener(this)
     }
 
     private fun removeGasto(position: Int){
@@ -184,7 +185,6 @@ class MainActivity : AppCompatActivity(),android.widget.SearchView.OnQueryTextLi
                     for (gastoObject in snapshot.children){
                         val objeto = gastoObject.getValue(GastoFb::class.java)
                         if(searchString.toInt() == objeto!!.universo!!){
-
                             lista.add(Gasto(objeto!!.id.toString(),
                                 objeto!!.nombre!!, objeto.universo!!,objeto.genero!!))
                         }
